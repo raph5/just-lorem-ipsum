@@ -1,0 +1,67 @@
+---
+const lipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+  .toUpperCase()
+  .split('')
+  .filter(l => l !== ',' && l !== ';' && l !== '.')
+const changableLettersList = "ABCDGHJKLNOPQRSUVXYZ"
+  .split('')
+---
+
+<div class="background" id="backgroundAnimation">
+  {lipsum.map((letter, key) => (
+    <span class={`background__letter ${changableLettersList.includes(letter) ? 'background__letter--fixed' : ''}`} key={key}>{letter}</span>
+  ))}
+</div>
+
+<script>
+function slice(array) {
+  const random = Math.floor(Math.random() * array.length);
+  return array[random];
+}
+
+const letters = document.getElementById('backgroundAnimation').children;
+const changableLettersList = "ABCDGHJKLNOPQRSUVXYZ".split('')
+const changableLettersId = []
+
+for(let i=0; i<letters.length; i++) {
+  if(changableLettersList.includes(letters[i].innerHTML)) {
+    changableLettersId.push(i);
+  }
+}
+
+setInterval(() => {
+  letters[slice(changableLettersId)].innerHTML = slice(changableLettersList)
+}, 150);
+</script>
+
+<style lang="scss">
+@import '../scss/var';
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.background {
+  --font-size: 150px;
+  position: fixed;
+  z-index: 1;
+  width: calc(100% + var(--font-size) * 2.5);
+  top: calc(var(--font-size) * -.2);
+  left: calc(var(--font-size) * -.6);
+  pointer-events: none;
+  font-family: $font-background;
+  font-size: var(--font-size);
+  color: $color-primary-light;
+
+  &__letter--fixed {
+    display: inline-flex;
+    justify-content: center;
+    width: calc(var(--font-size) * 1);
+  }
+}
+</style>
