@@ -3,7 +3,7 @@
   <div class="generator">
     <label class="generator__word-count" for="wordCount">
       <span>word count :</span>
-      <input name="wordCount" type="text" value="19" ref="wordCountInupt" @keypress.enter="generate">
+      <CustomSlideInput @keypress.enter="generate" v-model="wordCount" />
     </label>
     <button class="generator__generate" @click="generate">generate</button>
     <div class="generator__output">
@@ -22,17 +22,20 @@
 </template>
 
 <script>
-import loremipsum from '../lib/loremipsum.js';
+import CustomSlideInput from './small/CustomSlideInput.vue'
+import loremipsum from '../lib/loremipsum.js'
 
 export default {
+  components: { CustomSlideInput },
   data() {
     return {
+      wordCount: 19,
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     }
   },
   methods: {
     generate() {
-      const wordCount = parseInt(this.$refs['wordCountInupt'].value);
+      const wordCount = parseInt(this.wordCount);
       if(wordCount) {
         this.text = (loremipsum + '\n').repeat(Math.floor(wordCount / this.wordsIndex.maxIndex)) + loremipsum.substr(0, this.wordsIndex[wordCount % this.wordsIndex.maxIndex]);
       }
@@ -42,7 +45,7 @@ export default {
     },
     copy() {
       navigator.clipboard.writeText(this.text)
-    }
+    },
   },
   created() {
     const wordsIndex = {};
@@ -81,24 +84,7 @@ export default {
     grid-area: word-count;
     font-size: 20px;
     padding-top: 4px;
-
-    input {
-      display: inline;
-      width: max-content;
-      font-size: 20px;
-      font-family: $font;
-      background: transparent;
-      border: none;
-      border-bottom: solid 1px $color-black;
-      outline: none;
-      width: 50px;
-      padding: 0 3px;
-      cursor: e-resize;
-
-      &:focus {
-        border-bottom: solid 2px $color-black;
-      }
-    }
+    
     span {
       margin-right: 8px;
     }
@@ -137,6 +123,8 @@ export default {
 
       &__text {
         padding: 10px;
+        text-align: justify;
+        white-space: pre-line;
       }
       &__bottum {
         margin: auto 0 0 2px;
