@@ -5,6 +5,8 @@
 <style lang="scss">
 @import '../scss/var';
 
+@keyframes font-loading { from { opacity: 0; } to { opacity: 1; } }
+
 .background {
   --font-size: 150px;
   position: fixed;
@@ -17,5 +19,6 @@
   font-size: var(--font-size);
   color: $color-primary-light;
   word-break: break-all;
+  animation: font-loading 500ms ease;
 }
 </style>

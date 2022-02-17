@@ -12,5 +12,9 @@
     "@astrojs/renderer-vue": "^0.3.0",
     "astro": "^0.22.1",
     "sass": "^1.45.1"
+  },
+  "dependencies": {
+    "tiny-emitter": "^2.1.0",
+    "vuex": "^4.0.2"
   }
 }
